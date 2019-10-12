@@ -1,0 +1,2 @@
+include ':app', ':wifilib'
+rootProject.name='WiFiEnvScanner'

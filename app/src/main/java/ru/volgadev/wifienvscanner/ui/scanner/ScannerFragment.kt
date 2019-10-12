@@ -1,0 +1,69 @@
+package ru.volgadev.wifienvscanner.ui.scanner
+
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
+import ru.volgadev.wifienvscanner.Common.APP_TAG
+import ru.volgadev.wifienvscanner.R
+import ru.volgadev.wifienvscanner.util.Permission
+import ru.volgadev.wifilib.api.WiFiPoint
+import ru.volgadev.wifilib.impl.AndroidWiFiScanner
+
+class ScannerFragment : Fragment() {
+
+    private val TAG: String = APP_TAG.plus(".ScanFragment")
+
+    private lateinit var scanResultsViewModel: ScannerViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        scanResultsViewModel =
+            ViewModelProviders.of(this).get(ScannerViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_scan_results, container, false)
+
+        if (!AndroidWiFiScanner.checkWiFiServiceAvailable(activity!!.applicationContext)){
+            showNeedPermissionMessage()
+            Permission.makeEnableLocationServices(activity!!.applicationContext)
+            Permission.requestWiFiPermissions(activity!!)
+        }
+
+        val contactsRecyclerView: RecyclerView = root.findViewById(R.id.contactsRecyclerView)
+        val scanResultsViewAdapter = ScanResultsViewAdapter()
+        contactsRecyclerView.adapter = scanResultsViewAdapter
+
+        /* вешаем обработчик нажания кнопки initCall у элемента */
+        scanResultsViewAdapter.setCallClickListener(object : CallClickListener {
+            override fun onCallClick(contactId: String) {
+                Log.d(TAG, "Handle call click to $contactId")
+            }
+        })
+
+        scanResultsViewModel.pointsList.observe(this, Observer {
+            val contactList: List<WiFiPoint> = it
+            contactList.onEach { point ->
+                Log.d(TAG, "Show point ".plus(point.toString()))
+                scanResultsViewAdapter.add(point)
+            }
+
+        })
+
+        scanResultsViewModel.startScan(activity!!.applicationContext)
+
+        return root
+    }
+
+    private fun showNeedPermissionMessage(){
+        Toast.makeText(activity!!.applicationContext, "Дай разрешения", Toast.LENGTH_SHORT).show()
+    }
+}
