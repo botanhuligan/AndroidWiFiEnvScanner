@@ -1,0 +1,1 @@
+# Wi-Fi scanner. Issue helper
