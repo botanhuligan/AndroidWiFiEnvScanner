@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.volgadev.wifienvscanner.Common.APP_TAG
 import ru.volgadev.wifienvscanner.R
@@ -38,9 +39,12 @@ class ScannerFragment : Fragment() {
             Permission.requestWiFiPermissions(activity!!)
         }
 
-        val contactsRecyclerView: RecyclerView = root.findViewById(R.id.contactsRecyclerView)
+        val scanResultRecyclerView: RecyclerView = root.findViewById(R.id.scanResultRecyclerView)
+        scanResultRecyclerView.setHasFixedSize(true)
+        scanResultRecyclerView.layoutManager =  LinearLayoutManager(root.context)
+
         val scanResultsViewAdapter = ScanResultsViewAdapter()
-        contactsRecyclerView.adapter = scanResultsViewAdapter
+        scanResultRecyclerView.adapter = scanResultsViewAdapter
 
         /* вешаем обработчик нажания кнопки initCall у элемента */
         scanResultsViewAdapter.setCallClickListener(object : CallClickListener {

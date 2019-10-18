@@ -18,6 +18,7 @@ class ScannerViewModel : ViewModel() {
     var pointsList: MutableLiveData<List<WiFiPoint>> = MutableLiveData()
 
     fun startScan(context: Context){
+
         ScannerApi.startScan(context)
         // TODO: спрятать этот слой в Data
         ScannerApi.setListener(object : WifiStateListener(){
@@ -44,7 +45,7 @@ class ScannerViewModel : ViewModel() {
             /* обработчик нового результата сканирования */
             override fun onNewScanResult(resultPoints: List<WiFiPoint>) {
                 Log.d(TAG, "New scan result: ".plus(resultPoints.toString()))
-                pointsList.value = resultPoints
+                pointsList.postValue(resultPoints)
             }
         })
     }

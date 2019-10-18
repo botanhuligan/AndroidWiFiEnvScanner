@@ -19,8 +19,8 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:elevation="12dp"
                 app:cardCornerRadius="32dp"
                 android:layout_margin="@dimen/fab_margin"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/person_name"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
