@@ -34,7 +34,7 @@ class ScanResultsViewAdapter : RecyclerView.Adapter<ContactViewElementsHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewElementsHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_contact, parent, false)
+            .inflate(R.layout.list_item_wifi_point, parent, false)
         // context = parent.context
         return ContactViewElementsHolder(v)
     }
@@ -52,12 +52,12 @@ class ScanResultsViewAdapter : RecyclerView.Adapter<ContactViewElementsHolder>()
         //         .placeholder(ru.volgadev.jitsiclient.R.drawable.list_item_bg)
         //         .into(holder.avatar);
         // }
-        holder.callButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                Log.d(TAG, "Click initCall to ".plus(holder.serverId.text.toString()))
-                clickCallListener?.onCallClick(contacts[position].toString())
-            }
-        })
+        // holder.callButton.setOnClickListener(object : View.OnClickListener {
+        //     override fun onClick(p0: View?) {
+        //         Log.d(TAG, "Click initCall to ".plus(holder.serverId.text.toString()))
+        //         clickCallListener?.onCallClick(contacts[position].toString())
+        //     }
+        // })
     }
 
     fun add(contact: WiFiPoint) {
@@ -74,6 +74,4 @@ class ContactViewElementsHolder internal constructor(itemView: View) : RecyclerV
     internal var name: TextView = itemView.findViewById<View>(R.id.person_name) as TextView
     internal var serverId: TextView = itemView.findViewById<View>(R.id.person_id) as TextView
     internal var avatar: ImageView = itemView.findViewById<View>(R.id.person_ava) as ImageView
-    internal var callButton: Button =
-        itemView.findViewById<Button>(R.id.init_call_btn) as Button
 }

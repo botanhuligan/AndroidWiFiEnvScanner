@@ -68,6 +68,9 @@
         android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button"
+        android:backgroundTint="#03C3EC"
+        android:textSize="14sp"
         android:text="@string/button_login">
     </androidx.appcompat.widget.AppCompatButton>
 

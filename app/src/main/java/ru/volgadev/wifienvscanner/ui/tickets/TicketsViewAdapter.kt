@@ -31,7 +31,7 @@ class TicketsViewAdapter : RecyclerView.Adapter<TicketElementHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketElementHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_contact, parent, false)
+            .inflate(R.layout.list_item_ticket, parent, false)
         return TicketElementHolder(v)
     }
 

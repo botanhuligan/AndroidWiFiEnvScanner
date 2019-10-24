@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WiFiEnvScanner</string>
+    <string name="app_name">СКУН</string>
     <string name="title_home">Home</string>
     <string name="title_scanner">Scanner</string>
     <string name="title_notifications">Notifications</string>
@@ -11,4 +11,14 @@
     <string name="label_tickets">Мои тикеты</string>
     <string name="user_name">user name</string>
     <string name="plus">+</string>
+    <string name="wifi_points">Точки доступа</string>
+    <string name="to_scan">Сканировать</string>
+    <string name="to_speed_test">Начать</string>
+    <string name="label_city">Город</string>
+    <string name="label_corpus">Корпус</string>
+    <string name="label_floor">Этаж</string>
+    <string name="label_comment">Комментарий</string>
+    <string name="label_speedtest">Speed Test</string>
+    <string name="sample_speed_test">\'url\': { ping(msec), \n   upload(MBit/sec), \n   download(MBit/sec) }</string>
+    <string name="button_text_send">Отправить</string>
 </resources>

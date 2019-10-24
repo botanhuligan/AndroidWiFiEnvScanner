@@ -1,15 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/activity_vertical_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E5E5E5">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/scanResultRecyclerView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="horizontal"
-        tools:ignore="MissingConstraints" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/scanResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/fab_margin"
+            android:background="@color/cardview_light_background">
+            <TextView
+                android:id="@+id/text_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                android:text="@string/wifi_points"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/scanResultRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="212dp"
+                android:scrollbars="horizontal"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/to_scan_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/to_scan"
+                style="@style/Widget.AppCompat.Button"
+                android:backgroundTint="#03C3EC"
+                android:textSize="14sp">
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <!-- комментарий -->
+            <TextView
+                android:id="@+id/text_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
+                android:text="@string/label_comment"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:inputType="number"
+                android:layout_gravity="center_horizontal"/>
+
+
+            <!-- город -->
+            <TextView
+                android:id="@+id/text_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
+                android:text="@string/label_city"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/city_spinner"
+                android:layout_marginEnd="8dp"
+                android:textAlignment="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                style="@style/Widget.AppCompat.Spinner"/>
+            <!-- корпус -->
+            <TextView
+                android:id="@+id/text_corpus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
+                android:text="@string/label_corpus"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/corpus_spinner"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                style="@style/Widget.AppCompat.Spinner"/>
+            <!-- корпус -->
+            <TextView
+                android:id="@+id/text_floor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
+                android:text="@string/label_floor"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:inputType="number"
+                android:layout_gravity="center_horizontal"/>
+
+            <!-- speed test -->
+            <TextView
+                android:id="@+id/text_speed_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
+                android:text="@string/label_speedtest"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/scan_results_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="4"
+                android:maxLines="30"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="18dp"
+                android:text="@string/sample_speed_test" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/to_speedtest_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/to_speed_test"
+                style="@style/Widget.AppCompat.Button"
+                android:backgroundTint="#03C3EC"
+                android:textSize="14sp">
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/to_send_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/button_text_send"
+                android:layout_marginTop="24dp"
+                style="@style/Widget.AppCompat.Button"
+                android:backgroundTint="@color/colorPrimary"
+                android:textSize="14sp">
+            </androidx.appcompat.widget.AppCompatButton>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
