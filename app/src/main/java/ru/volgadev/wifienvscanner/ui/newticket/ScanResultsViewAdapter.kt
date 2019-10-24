@@ -1,18 +1,20 @@
 package ru.volgadev.wifienvscanner.ui.newticket
 
-import android.util.Log
+import android.graphics.Color
+import android.net.wifi.WifiManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 // import com.squareup.picasso.Picasso
 import ru.volgadev.wifienvscanner.Common
-import ru.volgadev.wifienvscanner.R
 import ru.volgadev.wifilib.api.WiFiPoint
+
+
 
 /* вешаем листенер для обработки нажатия на кнопку Call */
 interface CallClickListener {
@@ -24,44 +26,71 @@ interface CallClickListener {
  *
  * @author mmarashan
  */
-class ScanResultsViewAdapter : RecyclerView.Adapter<ContactViewElementsHolder>() {
+class ScanResultsViewAdapter : RecyclerView.Adapter<ScanResElementsHolder>() {
 
     private val TAG: String = Common.APP_TAG.plus("ContactsAdapter")
 
-    private var contacts: List<WiFiPoint> = mutableListOf()
+    private var points: ArrayList<WiFiPoint> = ArrayList()
     // private var context: Context? = null
     protected var clickCallListener: CallClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewElementsHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScanResElementsHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_wifi_point, parent, false)
+            .inflate(ru.volgadev.wifienvscanner.R.layout.list_item_wifi_point, parent, false)
         // context = parent.context
-        return ContactViewElementsHolder(v)
+        return ScanResElementsHolder(v)
     }
 
     override fun getItemCount(): Int {
-        return contacts.size
+        return points.size
     }
 
-    override fun onBindViewHolder(holder: ContactViewElementsHolder, position: Int) {
-        holder.name.text = contacts.get(position).SSID
-        holder.serverId.text = "@".plus(contacts.get(position).RSSI)
-        // if (contacts.get(position).avatarUrl != null) {
-        //     Picasso.with(holder.avatar.context)
-        //         .load(contacts.get(position).avatarUrl)
-        //         .placeholder(ru.volgadev.jitsiclient.R.drawable.list_item_bg)
-        //         .into(holder.avatar);
-        // }
-        // holder.callButton.setOnClickListener(object : View.OnClickListener {
-        //     override fun onClick(p0: View?) {
-        //         Log.d(TAG, "Click initCall to ".plus(holder.serverId.text.toString()))
-        //         clickCallListener?.onCallClick(contacts[position].toString())
-        //     }
-        // })
+    override fun onBindViewHolder(holder: ScanResElementsHolder, position: Int) {
+        val point: WiFiPoint = points[position]
+        if (point.connected) {
+            holder.ssid.text = point.SSID + " ✓ (Подключено)"
+        } else {
+            holder.ssid.text = point.SSID
+        }
+        val chanel = convertFrequencyToChannel(point.frequency)
+        if (chanel >0) holder.chanel.text = "Канал: "+ chanel
+        holder.signal_level.text = point.RSSI.toString()
+        if (point.capabilities!=null && point.capabilities!!.isNotEmpty()) {
+            holder.capabilities.text = Gson().toJson(point.capabilities!![0])
+        }
+
+        val percent =  WifiManager.calculateSignalLevel(point.RSSI, 100)
+        if (percent < 30) {
+            holder.signal_icon.setCardBackgroundColor(Color.RED)
+        } else if (percent < 85) {
+            holder.signal_icon.setCardBackgroundColor(Color.YELLOW)
+        } else {
+            holder.signal_icon.setCardBackgroundColor(Color.GREEN)
+        }
+
+        holder.mac_address.text = "MAC: "+point.BSSID
+
+    }
+
+
+    fun convertFrequencyToChannel(freq: Int): Int {
+        return if (freq >= 2412 && freq <= 2484) {
+            (freq - 2412) / 5 + 1
+        } else if (freq >= 5170 && freq <= 5825) {
+            (freq - 5170) / 5 + 34
+        } else {
+            -1
+        }
+    }
+
+    fun clear() {
+        val size = points.size
+        points.clear()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun add(contact: WiFiPoint) {
-        contacts = contacts.plus(contact)
+        points.add(contact)
         notifyDataSetChanged()
     }
 
@@ -70,8 +99,13 @@ class ScanResultsViewAdapter : RecyclerView.Adapter<ContactViewElementsHolder>()
     }
 }
 
-class ContactViewElementsHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    internal var name: TextView = itemView.findViewById<View>(R.id.person_name) as TextView
-    internal var serverId: TextView = itemView.findViewById<View>(R.id.person_id) as TextView
-    internal var avatar: ImageView = itemView.findViewById<View>(R.id.person_ava) as ImageView
+class ScanResElementsHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    internal var ssid: TextView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.ssid) as TextView
+    internal var capabilities: TextView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.capabilities) as TextView
+    internal var chanel: TextView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.chanel) as TextView
+    internal var signal_level: TextView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.signal_level) as TextView
+    internal var mac_address: TextView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.mac_address) as TextView
+    internal var signal_icon: CardView = itemView.findViewById<View>(ru.volgadev.wifienvscanner.R.id.signal_icon) as CardView
+
 }

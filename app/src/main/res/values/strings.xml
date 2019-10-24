@@ -3,14 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_scanner">Scanner</string>
     <string name="title_notifications">Notifications</string>
-    <string name="button_label_enabled">lbl</string>
+    <string name="button_label_enabled">🔍</string>
     <string name="login_page_header">Авторизация</string>
     <string name="header_password">Пароль</string>
     <string name="header_login">Логин</string>
     <string name="button_login">Войти</string>
     <string name="label_tickets">Мои тикеты</string>
     <string name="user_name">user name</string>
-    <string name="plus">+</string>
+    <string name="plus">➡</string>
     <string name="wifi_points">Точки доступа</string>
     <string name="to_scan">Сканировать</string>
     <string name="to_speed_test">Начать</string>

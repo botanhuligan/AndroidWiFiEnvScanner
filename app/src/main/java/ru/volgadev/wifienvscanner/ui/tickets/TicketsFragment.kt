@@ -56,9 +56,9 @@ class TicketsFragment : Fragment() {
         })
 
         ticketsViewModel.userTickets.observe(this, Observer {
-            val ticketsList: ArrayList<Ticket> = it
+            val ticketsList: List<Ticket> = it
+            ticketsViewAdapter.clear()
             ticketsList.onEach { ticket ->
-                Log.d(TAG, "Show ticket ".plus(ticket.toString()))
                 ticketsViewAdapter.add(ticket)
             }
         })
@@ -70,7 +70,7 @@ class TicketsFragment : Fragment() {
             newTicketsViewModel.createNewTicket()
         }
 
-        ticketsViewModel.loadTickets()
+        Thread {ticketsViewModel.loadTickets()}.start()
 
         return root
     }

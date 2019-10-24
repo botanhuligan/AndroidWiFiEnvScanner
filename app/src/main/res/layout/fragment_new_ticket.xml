@@ -48,7 +48,6 @@
 
             <!-- комментарий -->
             <TextView
-                android:id="@+id/text_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -57,12 +56,14 @@
                 android:textSize="20sp"
                 android:text="@string/label_comment"/>
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/text_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
-                android:inputType="number"
+                android:lines="2"
+                android:maxLines="10"
                 android:layout_gravity="center_horizontal"/>
 
 
@@ -105,9 +106,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 style="@style/Widget.AppCompat.Spinner"/>
-            <!-- корпус -->
+            <!-- этаж -->
             <TextView
-                android:id="@+id/text_floor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -116,6 +116,7 @@
                 android:textSize="20sp"
                 android:text="@string/label_floor"/>
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/text_floor"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

@@ -26,7 +26,7 @@ class TicketsViewAdapter : RecyclerView.Adapter<TicketElementHolder>() {
 
     private val TAG: String = Common.APP_TAG.plus("TicketsAdapter")
 
-    private var contacts: List<Ticket> = mutableListOf()
+    private var contacts: ArrayList<Ticket> = arrayListOf()
     protected var clickCallListener: CallClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketElementHolder {
@@ -40,15 +40,26 @@ class TicketsViewAdapter : RecyclerView.Adapter<TicketElementHolder>() {
     }
 
     override fun onBindViewHolder(holder: TicketElementHolder, position: Int) {
-        holder.title.text = contacts[position].title
+        val item: Ticket = contacts[position]
+        holder.title.text = "Тикет #"+item.id
+        if (item.status!=null) holder.status.text = item.status!!.title
+        if (item.description!=null) holder.comment.text = "Описание: "+item.description
+        if (item.label!=null && item.label!!.title !="No Label") holder.label.text = "Тема: "+ item.label!!.title
 
-        holder.item.setOnClickListener {
-            Log.d(TAG, "Click to ".plus(holder.title.text.toString()))
-        }
+        // holder.item.setOnClickListener {
+        //     Log.d(TAG, "Click to ".plus(holder.title.text.toString()))
+        // }
+    }
+
+
+    fun clear() {
+        val size = contacts.size
+        contacts.clear()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun add(contact: Ticket) {
-        contacts = contacts.plus(contact)
+        contacts.add(contact)
         notifyDataSetChanged()
     }
 
@@ -59,9 +70,9 @@ class TicketsViewAdapter : RecyclerView.Adapter<TicketElementHolder>() {
 
 class TicketElementHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
     internal var item: View = itemView
-    internal var title: TextView = itemView.findViewById<View>(R.id.person_name) as TextView
-    // internal var serverId: TextView = itemView.findViewById<View>(R.id.person_id) as TextView
-    // internal var avatar: ImageView = itemView.findViewById<View>(R.id.person_ava) as ImageView
-    // internal var callButton: Button =
-    //     itemView.findViewById<Button>(R.id.init_call_btn) as Button
+
+    internal var title: TextView = itemView.findViewById<View>(R.id.t_title) as TextView
+    internal var label: TextView = itemView.findViewById<View>(R.id.t_label) as TextView
+    internal var comment: TextView = itemView.findViewById<View>(R.id.t_description) as TextView
+    internal var status: TextView = itemView.findViewById<View>(R.id.T_status) as TextView
 }

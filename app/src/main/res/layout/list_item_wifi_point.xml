@@ -10,7 +10,7 @@
         android:layout_marginLeft="@dimen/mtrl_card_spacing"
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_marginRight="@dimen/mtrl_card_spacing"
-        android:minHeight="48dp"
+        android:minHeight="64dp"
         android:id="@+id/contact_card_view">
 
         <LinearLayout
@@ -19,17 +19,20 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:elevation="12dp"
-                app:cardCornerRadius="12dp"
+                android:id="@+id/signal_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:elevation="18dp"
+                app:cardCornerRadius="18dp"
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_centerHorizontal="true">
 
-                <ImageView
-                    android:id="@+id/person_ava"
-                    android:layout_width="match_parent"
-                    android:layout_height="24dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:id="@+id/signal_level"
+                    android:text="-50"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -43,12 +46,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/person_name"
+                    android:id="@+id/ssid"
                     android:textSize="18sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/person_id"
+                    android:id="@+id/capabilities"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chanel"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mac_address"
                     android:textSize="14sp" />
             </LinearLayout>
 

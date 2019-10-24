@@ -1,63 +1,80 @@
 package ru.volgadev.wifienvscanner.data.tickets
 
 import android.util.Log
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
+import com.google.gson.Gson
+import ru.volgadev.wifienvscanner.Common
 import ru.volgadev.wifilib.api.WiFiPoint
 import java.util.Date
-import kotlinx.serialization.*
 
 /**
  * Модель тикета соответствующая АПИ
  */
-@Serializable
-data class Ticket(val id: String? = null,
-                  val title: String? = null,
-                  val label: Label? = null,
-                  @ContextualSerialization val dateTime: Date? = null,
-                  val description: String? = null,
-                  val speedTest: SpeedTest? = null,
-                  val wifiPoints: List<@ContextualSerialization WiFiPoint>? = null,
-                  val status: String? = null,
-                  val point: Point? = null
-                  ){
+data class Ticket(var id: String? = null,
+                  var title: String? = null,
+                  var label: Label? = null,
+                  var description: String? = null,
+                  var speedTest: SpeedTest? = null,
+                  var wifi_points: HashMap<String, List<WiFiPoint>>? = null,
+                  var status: Status? = null,
+                  var point: Point? = null
+                  ) {
+
+    val TAG: String = Common.APP_TAG.plus(".Ticket")
 
     fun toJson(): String {
-        val json = Json(JsonConfiguration.Stable)
-        // serializing objects
-        val jsonData = json.stringify(Ticket.serializer(), this)
-        return jsonData
+        val jsonTicket = Gson().toJson(this)
+        Log.d(TAG, "Ticket to Json $jsonTicket")
+        return jsonTicket
     }
 
     companion object {
+        val TAG: String = Common.APP_TAG.plus(".Ticket")
+
         fun fromJson(str: String): Ticket {
-            val json = Json(JsonConfiguration.Stable)
-            val obj = json.parse(Ticket.serializer(), str)
-            return obj
+            val ticket: Ticket = Gson().fromJson<Ticket>(str, Ticket::class.java)
+            return ticket
+        }
+
+        fun fromArrayJson(str: String): List<Ticket> {
+            Log.d(TAG, "Parse $str")
+            try {
+                val tickets: List<Ticket> = Gson().fromJson(str, Array<Ticket>::class.java).toList()
+                Log.d(TAG, "Parse " + tickets.size + " tickets")
+                return tickets
+            } catch (e:Exception){
+                Log.e(TAG, "Bad parse result $e")
+                return listOf()
+            }
         }
     }
 }
 
 
-@Serializable
-data class SpeedTestResult(val ping: Float, val upload: Float, val download: Float)
-@Serializable
-data class SpeedTest(val resultMap: Map<String, SpeedTestResult>)
+data class SpeedTestResult(var ping: Float, var upload: Float, var download: Float)
+data class SpeedTest(var resultMap: Map<String, SpeedTestResult>)
 
-@Serializable
-data class Point(val id: String?,
-                 val x: Float?,
-                 val y: Float?,
-                 val location: Location?)
+data class Point(var id: String? = "",
+                 var x: Float? = 0f,
+                 var y: Float? = 0f,
+                 var location: Location? = null)
 
-@Serializable
-data class Location(val id: String?, val img: String?, val city: String?, val address: String?, val floor: Int)
+data class Location(var id: String? = null,
+                    var img: String? = null,
+                    var city: String? = null,
+                    var address: String? = null,
+                    var floor: Int = 0)
 
-enum class Label(val humanText: String) {
-    not_see("Not Visible WiFi"),
-    low_signal("Low Wifi Signal"),
-    noise("Noisy Channels"),
-    lost_traffic("Package Lost"),
-    other("Not Visible WiFi"),
-    unlabeled("Not Visible WiFi")
-}
+data class Status(var name: String? = null,
+                    var title: String? = null)
+
+data class Label(var name: String? = null,
+                  var title: String? = null)
+
+// enum class Label(var humanText: String) {
+//     not_see("Not Visible WiFi"),
+//     low_signal("Low Wifi Signal"),
+//     noise("Noisy Channels"),
+//     lost_traffic("Package Lost"),
+//     other("Not Visible WiFi"),
+//     unlabeled("Not Visible WiFi")
+// }
