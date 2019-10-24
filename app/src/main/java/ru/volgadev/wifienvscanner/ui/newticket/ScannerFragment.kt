@@ -1,4 +1,4 @@
-package ru.volgadev.wifienvscanner.ui.scanner
+package ru.volgadev.wifienvscanner.ui.newticket
 
 import android.os.Bundle
 import android.util.Log
@@ -31,7 +31,7 @@ class ScannerFragment : Fragment() {
 
         scanResultsViewModel =
             ViewModelProviders.of(this).get(ScannerViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_scan_results, container, false)
+        val root = inflater.inflate(R.layout.fragment_new_ticket, container, false)
 
         if (!AndroidWiFiScanner.checkWiFiServiceAvailable(activity!!.applicationContext)){
             showNeedPermissionMessage()

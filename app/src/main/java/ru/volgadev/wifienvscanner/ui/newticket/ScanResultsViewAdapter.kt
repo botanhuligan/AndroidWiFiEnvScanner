@@ -1,4 +1,4 @@
-package ru.volgadev.wifienvscanner.ui.scanner
+package ru.volgadev.wifienvscanner.ui.newticket
 
 import android.util.Log
 import android.view.LayoutInflater

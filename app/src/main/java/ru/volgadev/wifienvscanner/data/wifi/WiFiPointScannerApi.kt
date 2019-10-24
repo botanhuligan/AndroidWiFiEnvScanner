@@ -1,4 +1,4 @@
-package ru.volgadev.wifienvscanner.data
+package ru.volgadev.wifienvscanner.data.wifi
 
 import android.content.Context
 import ru.volgadev.wifilib.api.WiFiPoint
@@ -9,7 +9,7 @@ import ru.volgadev.wifilib.impl.AndroidWiFiScanner
  * Обертка над AndroidWiFiScanner
  * @author mmarashan
  */
-object ScannerApi {
+object WiFiPointScannerApi {
 
     fun startScan(context: Context) {
         AndroidWiFiScanner.startScan(context)

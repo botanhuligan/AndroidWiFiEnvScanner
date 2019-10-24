@@ -1,4 +1,4 @@
-package ru.volgadev.wifienvscanner.ui.notifications
+package ru.volgadev.wifienvscanner.ui.tickets
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

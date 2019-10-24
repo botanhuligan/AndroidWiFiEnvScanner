@@ -4,4 +4,8 @@
     <string name="title_scanner">Scanner</string>
     <string name="title_notifications">Notifications</string>
     <string name="button_label_enabled">lbl</string>
+    <string name="login_page_header">Авторизация</string>
+    <string name="header_password">Пароль</string>
+    <string name="header_login">Логин</string>
+    <string name="button_login">Войти</string>
 </resources>
