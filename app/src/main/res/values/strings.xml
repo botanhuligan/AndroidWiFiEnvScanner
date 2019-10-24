@@ -8,4 +8,7 @@
     <string name="header_password">Пароль</string>
     <string name="header_login">Логин</string>
     <string name="button_login">Войти</string>
+    <string name="label_tickets">Мои тикеты</string>
+    <string name="user_name">user name</string>
+    <string name="plus">+</string>
 </resources>

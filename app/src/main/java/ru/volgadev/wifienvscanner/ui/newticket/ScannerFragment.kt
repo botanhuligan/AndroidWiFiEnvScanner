@@ -54,8 +54,8 @@ class ScannerFragment : Fragment() {
         })
 
         scanResultsViewModel.pointsList.observe(this, Observer {
-            val contactList: List<WiFiPoint> = it
-            contactList.onEach { point ->
+            val pointsList: List<WiFiPoint> = it
+            pointsList.onEach { point ->
                 Log.d(TAG, "Show point ".plus(point.toString()))
                 scanResultsViewAdapter.add(point)
             }

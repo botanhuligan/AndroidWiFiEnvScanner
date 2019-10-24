@@ -15,9 +15,9 @@ class LoginViewModel : ViewModel() {
     var credentials: Credential? = null
 
     // флажок о том, что успешно пройлена авторизация
-    var auth: MutableLiveData<Boolean> = MutableLiveData(false)
+    var auth: MutableLiveData<Boolean> = MutableLiveData()
     // флажок о том, что были проверены и не успешно
-    var badCredential: MutableLiveData<Boolean> = MutableLiveData(false)
+    var badCredential: MutableLiveData<Boolean> = MutableLiveData()
 
 
     fun loadSavedCredentials() {

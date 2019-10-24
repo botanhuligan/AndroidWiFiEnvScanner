@@ -56,7 +56,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="@dimen/fab_margin"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_item"
                 android:layout_gravity="center_vertical"
                 android:shadowColor="@color/colorPrimary"
                 android:text="@string/button_label_enabled" />

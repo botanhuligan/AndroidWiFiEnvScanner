@@ -1,7 +1,6 @@
 package ru.volgadev.wifienvscanner.ui.login
 
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,20 +19,21 @@ class LoginFragment : Fragment() {
 
     private val TAG: String = Common.APP_TAG.plus(".LoginFrgmnt")
 
-    private lateinit var mLoginViewModel: LoginViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mLoginViewModel =
-            ViewModelProviders.of(this).get(LoginViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_login, container, false)
 
         val loginEditText: EditText = root.findViewById(R.id.loginEt)
         val passwordEditText: EditText = root.findViewById(R.id.passwordEt)
         val loginButton: Button = root.findViewById(R.id.loginBtn)
+
+        /* WARN! провайдером дб активити чтобы иметь доступ к тоже же объекту VM */
+        loginViewModel = ViewModelProviders.of(this.activity!!).get(LoginViewModel::class.java)
 
         // скрываем символы логина
         passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
@@ -41,32 +41,32 @@ class LoginFragment : Fragment() {
         /* сначала пробуем по сохраненным */
         loginEditText.freezesText = true
         passwordEditText.freezesText = true
-        mLoginViewModel.loadSavedCredentials()
-        if (mLoginViewModel.credentials!=null){
+        loginViewModel.loadSavedCredentials()
+        if (loginViewModel.credentials!=null){
             Log.d(TAG, "Set saved credentials")
-            loginEditText.setText(mLoginViewModel.credentials!!.login)
-            passwordEditText.setText(mLoginViewModel.credentials!!.password)
-            // mLoginViewModel.checkSavedCredentials()
+            loginEditText.setText(loginViewModel.credentials!!.login)
+            passwordEditText.setText(loginViewModel.credentials!!.password)
+            // loginViewModel.checkSavedCredentials()
         }
 
 
         // при нажатии на кнопку обнавляем логин-пароль и проверяем
         loginButton.setOnClickListener {
-            mLoginViewModel.putCredentials(loginEditText.text.toString(),
+            loginViewModel.putCredentials(loginEditText.text.toString(),
                 passwordEditText.text.toString()
             )
-            mLoginViewModel.checkSavedCredentials()
+            loginViewModel.checkSavedCredentials()
         }
 
         /* обсерверы на флаги результатов проверки логина */
-        mLoginViewModel.auth.observe(this, Observer {
+        loginViewModel.auth.observe(this, Observer {
             if (it) {
                 Toast.makeText(view!!.context,"✓ Вход", Toast.LENGTH_LONG).show()
                 Log.d(TAG, "Success auth")
             }
         })
 
-        mLoginViewModel.badCredential.observe(this, Observer {
+        loginViewModel.badCredential.observe(this, Observer {
             if (it) {
                 Toast.makeText(view!!.context,"❌ Неверные логин и пароль", Toast.LENGTH_SHORT).show()
                 loginEditText.freezesText = false
