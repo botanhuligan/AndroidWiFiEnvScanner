@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_scanner"
-        android:name="ru.volgadev.wifienvscanner.ui.newticket.ScannerFragment"
+        android:name="ru.volgadev.wifienvscanner.ui.newticket.NewTicketFragment"
         android:label="@string/title_scanner"
         tools:layout="@layout/fragment_new_ticket" />
 

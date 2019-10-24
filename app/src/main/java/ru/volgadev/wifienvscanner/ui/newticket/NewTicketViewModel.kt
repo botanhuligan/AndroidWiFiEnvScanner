@@ -5,16 +5,24 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.volgadev.wifienvscanner.Common
+import ru.volgadev.wifienvscanner.data.tickets.Ticket
 import ru.volgadev.wifienvscanner.data.wifi.WiFiPointScannerApi
 import ru.volgadev.wifilib.api.WiFiPoint
 import ru.volgadev.wifilib.api.WifiStateListener
 
-class ScannerViewModel : ViewModel() {
+class NewTicketViewModel : ViewModel() {
 
     private val TAG: String = Common.APP_TAG.plus(".ScanVM")
 
+    var newTicket: MutableLiveData<Ticket> = MutableLiveData()
+
     /* ссылка на список контактов */
     var pointsList: MutableLiveData<List<WiFiPoint>> = MutableLiveData()
+
+    /* старт создания нового тикета. далее - заполнение полей */
+     fun createNewTicket(){
+         newTicket.postValue(Ticket())
+     }
 
     fun startScan(context: Context){
 

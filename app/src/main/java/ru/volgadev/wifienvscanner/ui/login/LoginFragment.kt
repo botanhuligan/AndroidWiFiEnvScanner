@@ -46,6 +46,7 @@ class LoginFragment : Fragment() {
             Log.d(TAG, "Set saved credentials")
             loginEditText.setText(loginViewModel.credentials!!.login)
             passwordEditText.setText(loginViewModel.credentials!!.password)
+            // чтобы демонстрировать как логиниться, эту строку можно закомментировать:
             // loginViewModel.checkSavedCredentials()
         }
 

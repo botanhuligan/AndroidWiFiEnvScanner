@@ -17,11 +17,11 @@ import ru.volgadev.wifienvscanner.util.Permission
 import ru.volgadev.wifilib.api.WiFiPoint
 import ru.volgadev.wifilib.impl.AndroidWiFiScanner
 
-class ScannerFragment : Fragment() {
+class NewTicketFragment : Fragment() {
 
     private val TAG: String = APP_TAG.plus(".ScanFragment")
 
-    private lateinit var scanResultsViewModel: ScannerViewModel
+    private lateinit var newTicketsViewModel: NewTicketViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +29,8 @@ class ScannerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        scanResultsViewModel =
-            ViewModelProviders.of(this).get(ScannerViewModel::class.java)
+        newTicketsViewModel =
+            ViewModelProviders.of(this.activity!!).get(NewTicketViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_new_ticket, container, false)
 
         if (!AndroidWiFiScanner.checkWiFiServiceAvailable(activity!!.applicationContext)){
@@ -53,7 +53,7 @@ class ScannerFragment : Fragment() {
             }
         })
 
-        scanResultsViewModel.pointsList.observe(this, Observer {
+        newTicketsViewModel.pointsList.observe(this, Observer {
             val pointsList: List<WiFiPoint> = it
             pointsList.onEach { point ->
                 Log.d(TAG, "Show point ".plus(point.toString()))
@@ -62,7 +62,7 @@ class ScannerFragment : Fragment() {
 
         })
 
-        scanResultsViewModel.startScan(activity!!.applicationContext)
+        newTicketsViewModel.startScan(activity!!.applicationContext)
 
         return root
     }

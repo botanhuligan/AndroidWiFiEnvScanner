@@ -11,15 +11,15 @@ import kotlinx.serialization.*
  * Модель тикета соответствующая АПИ
  */
 @Serializable
-data class Ticket(val id: String?,
-                  val title: String?,
-                  val label: Label?,
-                  @ContextualSerialization val dateTime: Date,
-                  val description: String?,
-                  val speedTest: SpeedTest?,
-                  val wifiPoints: List<@ContextualSerialization WiFiPoint>,
-                  val status: String,
-                  val point: Point
+data class Ticket(val id: String? = null,
+                  val title: String? = null,
+                  val label: Label? = null,
+                  @ContextualSerialization val dateTime: Date? = null,
+                  val description: String? = null,
+                  val speedTest: SpeedTest? = null,
+                  val wifiPoints: List<@ContextualSerialization WiFiPoint>? = null,
+                  val status: String? = null,
+                  val point: Point? = null
                   ){
 
     fun toJson(): String {
