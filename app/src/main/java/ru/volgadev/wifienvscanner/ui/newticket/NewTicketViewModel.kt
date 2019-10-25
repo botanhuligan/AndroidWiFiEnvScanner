@@ -8,11 +8,15 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import ru.volgadev.wifienvscanner.Common
+import ru.volgadev.wifienvscanner.Common.SPEED_TEST_HOST_URLS
 import ru.volgadev.wifienvscanner.data.tickets.Location
 import ru.volgadev.wifienvscanner.data.tickets.Point
+import ru.volgadev.wifienvscanner.data.tickets.SpeedTest
+import ru.volgadev.wifienvscanner.data.tickets.SpeedTestResult
 import ru.volgadev.wifienvscanner.data.tickets.Ticket
 import ru.volgadev.wifienvscanner.data.tickets.TicketsAPI
 import ru.volgadev.wifienvscanner.data.wifi.WiFiPointScannerApi
+import ru.volgadev.wifienvscanner.util.SpeedTester
 import ru.volgadev.wifilib.api.WiFiPoint
 import ru.volgadev.wifilib.api.WifiStateListener
 import java.io.IOException
@@ -20,6 +24,10 @@ import java.io.IOException
 class NewTicketViewModel : ViewModel() {
 
     private val TAG: String = Common.APP_TAG.plus(".ScanVM")
+
+    val connectionError: MutableLiveData<Boolean> = MutableLiveData()
+
+    var speedTestLiveData: MutableLiveData<SpeedTest> = MutableLiveData()
 
     var newTicket: MutableLiveData<Ticket> = MutableLiveData()
 
@@ -55,6 +63,31 @@ class NewTicketViewModel : ViewModel() {
 
     fun setFloor(c: Int){
         newTicket.value?.point?.location?.floor = c
+    }
+
+    fun makeSpeedTest(){
+
+        Log.d(TAG, "Start speed test")
+        val speedTest: SpeedTest = SpeedTest(HashMap())
+        var testCount = 0
+        for (url in SPEED_TEST_HOST_URLS){
+            SpeedTester.speedTest(url, object: SpeedTester.SpeedTestCallback {
+                override fun onConnectionError() {
+                    Log.e(TAG, "Speed test error")
+                    connectionError.postValue(true)
+                }
+
+                override fun onSpeedTestResults(url: String, count: Int, milliseconds: Long, downloadRate: Float) {
+                    testCount++
+                    speedTest.resultMap[url] = SpeedTestResult(milliseconds, downloadRate)
+                    if (testCount == SPEED_TEST_HOST_URLS.size) {
+                        Log.d(TAG, "Speed success")
+                        speedTestLiveData.postValue(speedTest)
+                        newTicket.value!!.speedTest = speedTest
+                    }
+                }
+            }, 5)
+        }
     }
 
     fun sendTicket(){

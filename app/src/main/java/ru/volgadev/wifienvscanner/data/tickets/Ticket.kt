@@ -50,8 +50,8 @@ data class Ticket(var id: String? = null,
 }
 
 
-data class SpeedTestResult(var ping: Float, var upload: Float, var download: Float)
-data class SpeedTest(var resultMap: Map<String, SpeedTestResult>)
+data class SpeedTestResult(var ping: Long, var download: Float)
+data class SpeedTest(var resultMap: HashMap<String, SpeedTestResult>)
 
 data class Point(var id: String? = "",
                  var x: Float? = 0f,

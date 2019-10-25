@@ -21,7 +21,10 @@ import android.widget.Spinner
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import com.google.gson.Gson
 import ru.volgadev.wifienvscanner.R
+import ru.volgadev.wifienvscanner.data.tickets.SpeedTest
 import java.lang.Exception
 
 class NewTicketFragment : Fragment() {
@@ -134,6 +137,27 @@ class NewTicketFragment : Fragment() {
         spinnerCorp.visibility = View.GONE
         floor.visibility = View.GONE
 
+        // запускаем спид тест
+        val speedTestField: TextView = root.findViewById(R.id.speed_test_tv)
+        val speedTestBtn: Button = root.findViewById(R.id.to_speedtest_btn)
+        speedTestBtn.setOnClickListener {
+            Log.d(TAG, "Start speed test")
+            newTicketsViewModel.makeSpeedTest()
+        }
+
+        newTicketsViewModel.speedTestLiveData.observe(this, object :Observer<SpeedTest>{
+            override fun onChanged(t: SpeedTest?) {
+                Log.d(TAG, "Update speed test field")
+                if (t!=null) speedTestField.text = Gson().toJson(t)
+            }
+        })
+
+        newTicketsViewModel.connectionError.observe(this, object :Observer<Boolean>{
+            override fun onChanged(t: Boolean?) {
+                if (t!=null && t) Toast.makeText(NewTicketFragment@context,
+                    "Спид тест остановлен. Проверьте подключение к сети", Toast.LENGTH_LONG).show()
+            }
+        })
 
         val sendBtn: Button = root.findViewById(R.id.to_send_btn)
         sendBtn.setOnClickListener{
